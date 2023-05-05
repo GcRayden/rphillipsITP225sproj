@@ -8,5 +8,7 @@ if (!isset($_COOKIE['username'])) {
 
 <?php include './includes/header.php';?>
     <?php include './includes/top_navbar.php';?>
-    <h2>My Quizzes:</h2>
+    <button class="createQuiz">Create New Quiz</button><br/><br/>
+    <h2>My Quizzes:</h2><br/><br/>
+    <?php include './models/search_db.php'; ?>
 <?php include './includes/footer.php';?>

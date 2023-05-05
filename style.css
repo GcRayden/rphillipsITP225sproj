@@ -88,6 +88,31 @@
     align-items: center;
   }
 
+  .createQuiz {
+    margin: 25px auto 0;
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  td {
+    padding: 20px;
+  }
+
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 30%;
+  }
+
+  td, th {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
   footer {
     margin-top: auto;
     display: flex;
