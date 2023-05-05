@@ -80,26 +80,20 @@
 
 ?>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Create Account</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h2>Create an Account: </h2><br/>
-        <form method="post">
-            <label for="username">Username:</label>
-                <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-            <label for="password">Password:</label>
-                <input type="password" name="password" value="<?php echo htmlspecialchars($_POST['password'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-            <label for="firstname">First Name:</label>
-                <input type="text" name="firstname" value="<?php echo htmlspecialchars($_POST['firstname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-            <label for="lastname">Last Name:</label>
-                <input type="text" name="lastname" value="<?php echo htmlspecialchars($_POST['lastname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-            <input type="submit" name="submitButton"/>
-        </form>
-        <h2><?php if (isset($_COOKIE['message'])) { echo $_COOKIE['message']; } ?></h2>
-    </body>
-</html>
+<?php include './includes/header.php';?>
+<body>
+    <h2>Create an Account: </h2><br/>
+    <form method="post">
+        <label for="username">Username:</label>
+            <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
+        <label for="password">Password:</label>
+            <input type="password" name="password" value="<?php echo htmlspecialchars($_POST['password'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
+        <label for="firstname">First Name:</label>
+            <input type="text" name="firstname" value="<?php echo htmlspecialchars($_POST['firstname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
+        <label for="lastname">Last Name:</label>
+            <input type="text" name="lastname" value="<?php echo htmlspecialchars($_POST['lastname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
+        <input type="submit" name="submitButton"/>
+    </form>
+    <h2><?php if (isset($_COOKIE['message'])) { echo $_COOKIE['message']; } ?></h2>
+</body>
+<?php include './includes/footer.php';?>

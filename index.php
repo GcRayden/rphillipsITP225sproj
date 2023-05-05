@@ -27,60 +27,22 @@ if (isset($_POST['submitButton']))
 }
 ?>
 
-<!doctype html>
-<html>
-    <head>
-        <title>Login Page</title>
-        <meta></meta>
-        <style>
+<?php include './includes/header.php';?>
+<body>
+    <h2>Robert's Quiz Website!</h2><br/>
+    <h3>Login:</h3><br/>
+    <form method="post">
+        <div class="form-group" style="display:flex; flex-direction:column; align-items:flex-start;">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+            <button type="submit" name="submitButton">Login</button>
+        </div>
+    </form>
 
-            body {
-                margin: 0;
-	            padding: 25px;
-	            border: 0;
-                text-align: center;
-                background-color:darkslategrey;
-            }
+    <h3>Don't have an account? <a href="create_account.php">Create one here!</a>
 
-            label {
-                font-size: larger;
-                font-weight: 800;
-                color:white;
-            }
-
-            select {
-                font-size: larger;
-                border-style: solid;
-                border-width: 0px;
-                overflow: hidden;
-            }
-
-            input {
-                font-size: larger;
-                border-style: solid;
-                border-width: 2px;
-                line-break: 10px;
-            }
-
-            h2, h3, p {
-                color:goldenrod;
-            }
-
-        </style>
-    </head>
-    <body>
-        <h2>Robert's Quiz Website!</h2><br/>
-        <h3>Login:</h3><br/>
-        <form method="post">
-        <label for="username">Username:</label>
-            <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-        <label for="password">Password:</label>
-            <input type="text" name="password" value="<?php echo htmlspecialchars($_POST['password'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
-            <input type="submit" name="submitButton"/>
-        </form>
-
-        <h3>Don't have an account? <a href="create_account.php">Create one here!</a>
-
-        <h2><?php echo $message ?></h2>
-    </body>
-</html>
+    <h2><?php echo $message ?></h2>
+</body>
+<?php include './includes/footer.php';?>
