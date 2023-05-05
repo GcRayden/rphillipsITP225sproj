@@ -6,6 +6,7 @@ if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
 
 $username = "";
 $password = "";
+$message = "";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -67,7 +68,8 @@ if (isset($_POST['submitButton']))
         </style>
     </head>
     <body>
-        <h2>Login: </h2><br/>
+        <h2>Robert's Quiz Website!</h2><br/>
+        <h3>Login:</h3><br/>
         <form method="post">
         <label for="username">Username:</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
