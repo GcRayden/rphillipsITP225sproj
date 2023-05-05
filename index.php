@@ -1,6 +1,18 @@
 <?php
 
-session_start();
+if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+    header('Location: account.php');
+}
+
+$username = "";
+$password = "";
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} else {
+    
+}
+
 require('./model/login_db.php');
 
 if (isset($_POST['submitButton']))
@@ -10,8 +22,6 @@ if (isset($_POST['submitButton']))
   $password = $_POST['password'];
 
   $message = login($username, $password);
-
-  $_SESSION["username"] = $username;
 }
 ?>
 

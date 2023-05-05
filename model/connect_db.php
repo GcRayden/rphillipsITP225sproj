@@ -1,13 +1,17 @@
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
     // Check if submitted
     function openConnection()
     {
         // MySQL info
         $servername = "localhost";
-        $username = "rp_hw6user";
-        $password = "rp_hw6pass";
-        $dbname = "rp_hw6_db";
+        $username = "rp_sprojuser";
+        $password = "rp_sprojpass";
+        $dbname = "rp_sproj_db";
 
         $mysqli = new mysqli($servername, $username, $password, $dbname);
 
