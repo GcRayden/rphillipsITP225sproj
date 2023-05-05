@@ -67,7 +67,7 @@ if (isset($_POST['submitButton']))
         </style>
     </head>
     <body>
-        <h1>Login: </h1><br/>
+        <h2>Login: </h2><br/>
         <form method="post">
         <label for="username">Username:</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
@@ -75,6 +75,8 @@ if (isset($_POST['submitButton']))
             <input type="text" name="password" value="<?php echo htmlspecialchars($_POST['password'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
             <input type="submit" name="submitButton"/>
         </form>
+
+        <h3>Don't have an account? <a href="create_account.php">Create one here!</a>
 
         <h2><?php echo $message ?></h2>
     </body>
