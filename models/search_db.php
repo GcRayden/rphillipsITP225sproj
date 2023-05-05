@@ -1,7 +1,7 @@
 <?php
 // Sample array of data
 $data = array(
-  array('Quiz', 'Description', 'Number of Items', 'Edit Quiz')
+  array('Name', 'Description', '# Items', 'Edit Quiz')
 );
 
 // Start the table
