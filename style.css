@@ -63,3 +63,11 @@
     background-color: #11a2db;
     color: white;
   }
+
+  .title {
+    background-color: #11a2db;
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

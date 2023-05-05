@@ -18,12 +18,7 @@ if (!isset($_COOKIE['username'])) {
 
 <?php include './includes/header.php';?>
 <body>
-    <div class="topnav">
-        <a class="active">Account</a>
-        <a href="my_quizzes.php">My Quizzes</a>
-        <a href="quiz_browser.php">Browse Quizzes</a>
-        <a href="./models/logout_db.php">Logout</a>
-    </div>
+    <?php include './includes/top_navbar.php';?>
     <h2>Welcome <?php echo $name ?>!</h2>
 </body>
 <?php include './includes/footer.php';?>

@@ -84,6 +84,7 @@
 <body>
     <h2>Create an Account: </h2><br/>
     <form method="post">
+      <div class="form-group" style="display:flex; flex-direction:column; align-items:flex-start;">
         <label for="username">Username:</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
         <label for="password">Password:</label>
@@ -93,6 +94,7 @@
         <label for="lastname">Last Name:</label>
             <input type="text" name="lastname" value="<?php echo htmlspecialchars($_POST['lastname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
         <input type="submit" name="submitButton"/>
+      </div>
     </form>
     <h2><?php if (isset($_COOKIE['message'])) { echo $_COOKIE['message']; } ?></h2>
 </body>
