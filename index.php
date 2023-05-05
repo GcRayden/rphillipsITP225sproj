@@ -10,6 +10,8 @@ if (isset($_POST['submitButton']))
   $password = $_POST['password'];
 
   $message = login($username, $password);
+
+  $_SESSION["username"] = $username;
 }
 ?>
 
