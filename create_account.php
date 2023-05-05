@@ -1,9 +1,11 @@
 <?php
 
-// Only start a session if one doesn't already exist
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
+    $message = "";
+
+    // Only start a session if one doesn't already exist
+    if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    }
 
   // Connect to the database
   require('./model/connect_db.php');
@@ -14,9 +16,6 @@ if (session_status() === PHP_SESSION_NONE) {
     $password = $_POST['password'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
-
-    // Variable to use for messages to the user
-    $message = "";
 
     // Open connection to database
     $mysqli = openConnection();
@@ -34,6 +33,12 @@ if (session_status() === PHP_SESSION_NONE) {
       if ($result->num_rows > 0)
       {
         $message = "Username has been taken. Please try again.";
+
+        // Set a temporary cookie
+        $_COOKIE['message'] = $message;
+        setcookie('message', $message, time() + (86400 * 30), "/"); // 1 day
+        
+        header('Location: create_account.php');
       }
       else
       {
@@ -43,6 +48,10 @@ if (session_status() === PHP_SESSION_NONE) {
             // Set the user's cookies, so they'll be remembered
             setcookie('username', $username, time() + (86400 * 30), "/"); // 1 day
             setcookie('password', $password, time() + (86400 * 30), "/"); // 1 day
+
+            // Clear temp cookie
+            unset($_COOKIE['message']);
+            setcookie('message', '', time() - 3600, "/");
 
             if ($sqlData[2] != "")
                 setcookie('firstname', $sqlData[2], time() + (86400 * 30), "/"); // 1 day
@@ -72,7 +81,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Account Management</title>
+        <title>Create Account</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
     </head>
@@ -89,6 +98,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 <input type="text" name="lastname" value="<?php echo htmlspecialchars($_POST['lastname'] ?? '', ENT_QUOTES); ?>" size="10" /><br>
             <input type="submit" name="submitButton"/>
         </form>
-        <h2>Welcome <?php echo $name ?>!</h2>
+        <h2><?php if (isset($_COOKIE['message'])) { echo $_COOKIE['message']; } ?></h2>
     </body>
 </html>

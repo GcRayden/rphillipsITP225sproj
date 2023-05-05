@@ -28,7 +28,7 @@ if (isset($_POST['submitButton']))
 <!doctype html>
 <html>
     <head>
-        <title></title>
+        <title>Login Page</title>
         <meta></meta>
         <style>
 
