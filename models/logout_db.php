@@ -9,9 +9,11 @@
     // If cookie still exists, then get rid of it and send user to index.php
     if (isset($_COOKIE['username']))
     {
+        unset($_COOKIE['memberid']);
         unset($_COOKIE['username']);
         unset($_COOKIE['password']);
         unset($_COOKIE['firstname']);
+        setcookie('memberid', '', time() - 3600, "/"); 
         setcookie('username', '', time() - 3600, "/"); 
         setcookie('password', '', time() - 3600, "/"); 
         setcookie('firstname', '', time() - 3600, "/");

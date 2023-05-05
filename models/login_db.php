@@ -37,6 +37,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
 
           // Set the user's cookies, so they'll be remembered
+          setcookie('memberid', (string)$sqlData[0], time() + (86400 * 30), "/"); // 1 day
           setcookie('username', $username, time() + (86400 * 30), "/"); // 1 day
           setcookie('password', $password, time() + (86400 * 30), "/"); // 1 day
 
