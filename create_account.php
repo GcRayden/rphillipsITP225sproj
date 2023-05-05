@@ -4,76 +4,78 @@
 
     // Only start a session if one doesn't already exist
     if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+      session_start();
     }
 
-  // Connect to the database
-  require('./model/connect_db.php');
+    $_SESSION['header'] = "Create Account";
 
-  if (isset($_POST['submitButton']))
-  {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+    // Connect to the database
+    require('./models/connect_db.php');
 
-    // Open connection to database
-    $mysqli = openConnection();
-
-    // Generate Select statement
-    $sql = "SELECT * FROM `rp_sproj_login` WHERE Username = '" . $username . "'";
-    $result = $mysqli->query($sql);
-
-    $sqlData = array();
-
-    // Check if a result is formed, if not, there's something wrong with the database
-    if ($result)
+    if (isset($_POST['submitButton']))
     {
-      // If the user is found in the database
-      if ($result->num_rows > 0)
-      {
-        $message = "Username has been taken. Please try again.";
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $firstname = $_POST['firstname'];
+      $lastname = $_POST['lastname'];
 
-        // Set a temporary cookie
-        $_COOKIE['message'] = $message;
-        setcookie('message', $message, time() + (86400 * 30), "/"); // 1 day
-        
-        header('Location: create_account.php');
+      // Open connection to database
+      $mysqli = openConnection();
+
+      // Generate Select statement
+      $sql = "SELECT * FROM `rp_sproj_login` WHERE Username = '" . $username . "'";
+      $result = $mysqli->query($sql);
+
+      $sqlData = array();
+
+      // Check if a result is formed, if not, there's something wrong with the database
+      if ($result)
+      {
+        // If the user is found in the database
+        if ($result->num_rows > 0)
+        {
+          $message = "Username has been taken. Please try again.";
+
+          // Set a temporary cookie
+          $_COOKIE['message'] = $message;
+          setcookie('message', $message, time() + (86400 * 30), "/"); // 1 day
+          
+          header('Location: create_account.php');
+        }
+        else
+        {
+
+          $sql2 = "INSERT INTO `rp_sproj_login` (Username, Password, FirstName, LastName) VALUES ('" . $username. "', '" . $password . "', '". $firstname . "', '" . $lastname . "')";
+          if ($mysqli->query($sql2) === TRUE) {
+              // Set the user's cookies, so they'll be remembered
+              setcookie('username', $username, time() + (86400 * 30), "/"); // 1 day
+              setcookie('password', $password, time() + (86400 * 30), "/"); // 1 day
+
+              // Clear temp cookie
+              unset($_COOKIE['message']);
+              setcookie('message', '', time() - 3600, "/");
+
+              if ($sqlData[2] != "")
+                  setcookie('firstname', $sqlData[2], time() + (86400 * 30), "/"); // 1 day
+
+              // Send them to the account page
+              header("Location: account.php");
+            } else {
+              echo "Error: " . $sql2 . "<br>" . $mysqli->error;
+            }
+        }
       }
       else
       {
-
-        $sql2 = "INSERT INTO `rp_sproj_login` (Username, Password, FirstName, LastName) VALUES ('" . $username. "', '" . $password . "', '". $firstname . "', '" . $lastname . "')";
-        if ($mysqli->query($sql2) === TRUE) {
-            // Set the user's cookies, so they'll be remembered
-            setcookie('username', $username, time() + (86400 * 30), "/"); // 1 day
-            setcookie('password', $password, time() + (86400 * 30), "/"); // 1 day
-
-            // Clear temp cookie
-            unset($_COOKIE['message']);
-            setcookie('message', '', time() - 3600, "/");
-
-            if ($sqlData[2] != "")
-                setcookie('firstname', $sqlData[2], time() + (86400 * 30), "/"); // 1 day
-
-            // Send them to the account page
-            header("Location: account.php");
-          } else {
-            echo "Error: " . $sql2 . "<br>" . $mysqli->error;
-          }
+        // Lets Professor know the database has an issue (this should not happen, but just in case..)
+        $message = "Error: No Results Returned!";
       }
-    }
-    else
-    {
-      // Lets Professor know the database has an issue (this should not happen, but just in case..)
-      $message = "Error: No Results Returned!";
-    }
 
-    // Closes the connection to the database
-    closeConnection($mysqli);
+      // Closes the connection to the database
+      closeConnection($mysqli);
 
-    // Return any messages that may have come up
-    return $message;
+      // Return any messages that may have come up
+      return $message;
   }
 
 ?>

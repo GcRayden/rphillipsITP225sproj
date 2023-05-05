@@ -28,7 +28,7 @@ if (!isset($_COOKIE['username'])) {
             <a class="active">Account</a>
             <a href="my_quizzes.php">My Quizzes</a>
             <a href="quiz_browser">Browse Quizzes</a>
-            <a href="./model/logout_db.php">Logout</a>
+            <a href="./models/logout_db.php">Logout</a>
         </div>
         <h2>Welcome <?php echo $name ?>!</h2>
     </body>

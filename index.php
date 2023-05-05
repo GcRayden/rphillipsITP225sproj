@@ -10,11 +10,12 @@ $message = "";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    $_SESSION['header'] = "Login Page";
 } else {
-    
+    $_SESSION['header'] = "Login Page";
 }
 
-require('./model/login_db.php');
+require('./models/login_db.php');
 
 if (isset($_POST['submitButton']))
 {

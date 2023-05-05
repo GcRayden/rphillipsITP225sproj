@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
   // Connect to the database
-  require('./model/connect_db.php');
+  require('./models/connect_db.php');
 
   /***********************
   * Login to the website *
