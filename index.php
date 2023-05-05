@@ -28,11 +28,10 @@ if (isset($_POST['submitButton']))
 ?>
 
 <?php include './includes/header.php';?>
-<body>
     <h2>Robert's Quiz Website!</h2><br/>
     <h3>Login:</h3><br/>
     <form method="post">
-        <div class="form-group" style="display:flex; flex-direction:column; align-items:flex-start;">
+        <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" class="form-control" required>
             <label for="password">Password:</label>
@@ -44,5 +43,4 @@ if (isset($_POST['submitButton']))
     <h3>Don't have an account? <a href="create_account.php">Create one here!</a>
 
     <h2><?php echo $message ?></h2>
-</body>
 <?php include './includes/footer.php';?>

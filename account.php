@@ -17,8 +17,6 @@ if (!isset($_COOKIE['username'])) {
 ?>
 
 <?php include './includes/header.php';?>
-<body>
     <?php include './includes/top_navbar.php';?>
     <h2>Welcome <?php echo $name ?>!</h2>
-</body>
 <?php include './includes/footer.php';?>
