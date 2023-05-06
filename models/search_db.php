@@ -28,7 +28,7 @@ function searchDB($quiz)
 
   // First data array
   $sqlData = array(
-    array('Quiz ID', 'Name', 'Description', 'Edit Quiz')
+    array('Quiz ID', 'Name', 'Description', 'Play')
   );
 
   // Check if a result is formed, if not, there's something wrong with the database
@@ -44,13 +44,13 @@ function searchDB($quiz)
 
       //array_unshift( $array, $header );
       //error_log('Quiz Found.', 0);
-      $message = count($sqlData) . " Quizzes Found!";
+      $message = (count($sqlData) - 1) . " Quizzes Found!";
     }
     else
     {
       $memberid = $_COOKIE['memberid'];
       // Otherwise, tell them they have the wrong password
-      $message = "No Quizzes Found! Member ID is " . $memberid;
+      $message = "No Quizzes Found!";
     }
   }
   else
@@ -88,7 +88,7 @@ function dataToTable($data)
       if (is_numeric($value))
         $quizNum = $value;
     }
-    echo "<td><button value='" . $quizNum . "'>Edit</button></td>";
+    echo "<td><button value='" . $quizNum . "'>Play</button></td>";
     echo "</tr>";
   }
 
@@ -96,6 +96,6 @@ function dataToTable($data)
   echo "</table>";
 
   global $message;
-  echo $message;
+  echo "<h3>" . $message . "</h3>";
 }
 ?>
