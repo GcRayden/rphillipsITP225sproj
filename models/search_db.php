@@ -8,15 +8,18 @@ require('./models/connect_db.php');
 function getQuizzes($memberID)
 {
   $getQuiz = "SELECT QuizID, Name, Description FROM `rp_sproj_quiz` INNER JOIN `rp_sproj_login` ON rp_sproj_quiz.MemberID = rp_sproj_login.MemberID WHERE rp_sproj_quiz.MemberID = " . $memberID;
-  searchDB($getQuiz);
+  $sqlData = array(array('Quiz ID', 'Name', 'Description', 'Play'));
+  searchDB($getQuiz, $sqlData);
 }
 
 function getAllQuizzes()
 {
-  //$sql = "SELECT * FROM `rp_sproj_login` WHERE Username = '" . $username . "' AND Password = '" . $password . "'";
+  $getQuiz = "SELECT QuizID, Username, Name, Description FROM `rp_sproj_quiz` INNER JOIN `rp_sproj_login` ON rp_sproj_quiz.MemberID = rp_sproj_login.MemberID";
+  $sqlData = array(array('Quiz ID', 'Creator', 'Quiz Name', 'Description', 'Play'));
+  searchDB($getQuiz, $sqlData);
 }
 
-function searchDB($quiz)
+function searchDB($quiz, $sqlData)
 {
   global $message;
 
@@ -25,11 +28,6 @@ function searchDB($quiz)
 
   // Generate Select statement
   $result = $mysqli->query($quiz);
-
-  // First data array
-  $sqlData = array(
-    array('Quiz ID', 'Name', 'Description', 'Play')
-  );
 
   // Check if a result is formed, if not, there's something wrong with the database
   if ($result)

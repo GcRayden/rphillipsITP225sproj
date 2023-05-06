@@ -9,4 +9,6 @@ if (!isset($_COOKIE['username'])) {
 <?php include './includes/header.php';?>
     <?php include './includes/top_navbar.php';?>
     <h2>Browse for Quizzes:</h2>
+    <?php include './models/search_db.php'; ?>
+    <?php getAllQuizzes(); ?>
 <?php include './includes/footer.php';?>
