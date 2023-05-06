@@ -11,5 +11,5 @@ if (!isset($_COOKIE['username'])) {
     <button class="createQuiz">Create New Quiz</button><br/><br/>
     <h2>My Quizzes:</h2><br/><br/>
     <?php include './models/search_db.php'; ?>
-    <?php getQuizzes($_COOKIE['memberid']); ?>
+    <?php $memberid = $_COOKIE['memberid']; getQuizzes($memberid); ?>
 <?php include './includes/footer.php';?>

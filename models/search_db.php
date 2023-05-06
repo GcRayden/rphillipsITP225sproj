@@ -2,9 +2,13 @@
 
 $message = "";
 
+// Connect to the database
+require('./models/connect_db.php');
+
 function getQuizzes($memberID)
 {
-  $sql = "SELECT * FROM `rp_sproj_quiz` INNER JOIN `rp_sproj_login` ON `rp_sproj_quiz.MemberID` = `rp_sproj_login.MemberID' WHERE MemberID = '" . $memberID . "'";
+  $getQuiz = "SELECT QuizID, Name, Description FROM `rp_sproj_quiz` INNER JOIN `rp_sproj_login` ON rp_sproj_quiz.MemberID = rp_sproj_login.MemberID WHERE rp_sproj_quiz.MemberID = " . $memberID;
+  searchDB($getQuiz);
 }
 
 function getAllQuizzes()
@@ -12,20 +16,19 @@ function getAllQuizzes()
   //$sql = "SELECT * FROM `rp_sproj_login` WHERE Username = '" . $username . "' AND Password = '" . $password . "'";
 }
 
-function searchDB($sql)
+function searchDB($quiz)
 {
-  // Variable to use for messages to the user
-  $message = "";
+  global $message;
 
   // Open connection to database
   $mysqli = openConnection();
 
   // Generate Select statement
-  $result = $mysqli->query($sql);
+  $result = $mysqli->query($quiz);
 
   // First data array
   $sqlData = array(
-    array('Name', 'Description', '# Items', 'Edit Quiz')
+    array('Quiz ID', 'Name', 'Description', 'Edit Quiz')
   );
 
   // Check if a result is formed, if not, there's something wrong with the database
@@ -35,32 +38,37 @@ function searchDB($sql)
     if ($result->num_rows > 0)
     {
       // Go through data and put it into an array
-      while($row = mysqli_fetch_array($result)) {
+      while($row = mysqli_fetch_row($result)) {
           $sqlData[] = $row;
       }
+
+      //array_unshift( $array, $header );
+      //error_log('Quiz Found.', 0);
+      $message = count($sqlData) . " Quizzes Found!";
     }
     else
     {
+      $memberid = $_COOKIE['memberid'];
       // Otherwise, tell them they have the wrong password
-      $message = "No Quizzes Found.";
+      $message = "No Quizzes Found! Member ID is " . $memberid;
     }
   }
   else
   {
     // Lets Professor know the database has an issue (this should not happen, but just in case..)
+    //array_unshift( $array, $header );
     $message = "Error: No Results Returned!";
   }
 
   // Closes the connection to the database
   closeConnection($mysqli);
 
-  // Return any messages that may have come up
-  return $message;
   dataToTable($sqlData);
 }
 
 function dataToTable($data)
 {
+  $quizNum = 0;
 
   // Start the table
   echo "<table>";
@@ -77,7 +85,10 @@ function dataToTable($data)
     echo "<tr>";
     foreach ($data[$i] as $value) {
       echo "<td>$value</td>";
+      if (is_numeric($value))
+        $quizNum = $value;
     }
+    echo "<td><button value='" . $quizNum . "'>Edit</button></td>";
     echo "</tr>";
   }
 

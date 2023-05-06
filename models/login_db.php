@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
     $mysqli = openConnection();
 
     // Generate Select statement
-    $sql = "SELECT * FROM `rp_sproj_login` WHERE Username = '" . $username . "' AND Password = '" . $password . "'";
+    $sql = "SELECT MemberID, Username, Password FROM `rp_sproj_login` WHERE Username = '" . $username . "' AND Password = '" . $password . "'";
     $result = $mysqli->query($sql);
 
     $sqlData = array();
@@ -36,10 +36,12 @@ if (session_status() === PHP_SESSION_NONE) {
            $sqlData[] = $row;
         }
 
+          $memberid = $sqlData[0][0];
           // Set the user's cookies, so they'll be remembered
-          setcookie('memberid', (string)$sqlData[0], time() + (86400 * 30), "/"); // 1 day
+          setcookie('memberid', intval($memberid), time() + (86400 * 30), "/"); // 1 day
           setcookie('username', $username, time() + (86400 * 30), "/"); // 1 day
           setcookie('password', $password, time() + (86400 * 30), "/"); // 1 day
+          $_COOKIE['memberid'] = intval($memberid);
 
           if ($sqlData[2] != "")
             setcookie('firstname', $sqlData[2], time() + (86400 * 30), "/"); // 1 day
