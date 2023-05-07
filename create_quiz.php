@@ -9,10 +9,25 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $_SESSION['header'] = "Create Account";
 
+// Generate a random token
+$submitToken = md5(uniqid(rand(), true));
+
+// Set the cookie with the token
+setcookie('submitToken', $submitToken, time() + 3600, '/');
+
 // Connect to the database
 require('./models/connect_db.php');
 
 if (isset($_POST['submitButton'])) {
+
+// Get the token from the cookie
+$submitToken = isset($_COOKIE['submitToken']) ? $_COOKIE['submitToken'] : '';
+
+// Get the token from the form submission
+$submittedToken = $_POST['submitToken'];
+
+// Check if the tokens match
+if ($submitToken === $submittedToken) {
     $questions = $_POST['question'];
     $answers = array();
     foreach ($questions as $key => $question) {
@@ -39,7 +54,7 @@ if (isset($_POST['submitButton'])) {
     // Generate Select statement
     $result = $mysqli->query($sql);
 
-    if ($mysqli->query($sql) === TRUE) {
+    if ($result === TRUE) {
         // Send them to the account page
         $quiz_id = mysqli_insert_id($mysqli);
         header('Location: play_quiz.php?quiz=' . $quiz_id);
@@ -50,8 +65,12 @@ if (isset($_POST['submitButton'])) {
     // Closes the connection to the database
     closeConnection($mysqli);
 
+    setcookie('submitToken', '', time() - 3600, '/');
+} else {
+    $message = "Error with the token!";
     // Return any messages that may have come up
     return $message;
+}
 }
 ?>
 
@@ -70,7 +89,7 @@ if (isset($_POST['submitButton'])) {
     for ($i = 1; $i <= $num_sets; $i++) {
     ?>
         <div class="form-group">
-            <br /><br /><label for="question<?php echo $i; ?>">Question <?php echo $i; ?>:</label>
+            <br /><br /><label for="question<?php echo $i; ?>">Question:<?php echo $i; ?>:</label>
             <input type="text" name="question[]" id="question<?php echo $i; ?>" size="50" />
         </div>
         <div class="form-group">
@@ -86,7 +105,8 @@ if (isset($_POST['submitButton'])) {
     <?php
     }
     ?>
-    <input type="submit" name="submitButton" />
+    <input type="hidden" name="submitToken" value="<?php echo $submitToken; ?>">
+    <button type="submit" name="submitButton">Submit</button>
 </form>
 
 <h2>
