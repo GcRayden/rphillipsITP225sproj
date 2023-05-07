@@ -32,10 +32,11 @@ function printQuizData($quizID)
     $count = 0;
     for ($row = 0; $row < count($parsedQ); $row++) {
         echo "<br/><br/><h2><b>" . $parsedQ[$row] . "</b></h2>";
-        $count++;
         for ($col = $count; $col < ($count + 4); $col++) {
+            echo "<h3>" . $count . "</h3>";
             echo "<h3><input type='radio' id='" . $row . "' name='" . $row . "'>" . $parsedA[$col] . "</h3>";
         }
+        $count + 4;
     }
 }
 
