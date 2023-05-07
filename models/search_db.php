@@ -80,7 +80,9 @@ function dataToTable($data)
             if (is_numeric($value))
                 $quizNum = $value;
         }
-        echo "<td><button value='" . $quizNum . "'>Play</button></td>";
+        echo "<form method='get' action='./play_quiz.php'>";
+        echo "<td><button type='submit' name='quiz' value='" . $quizNum . "'>Play</button></td>";
+        echo "</form>";
         echo "</tr>";
     }
 

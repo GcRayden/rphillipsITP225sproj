@@ -33,16 +33,16 @@ function printQuizData($quizID)
     for ($row = 0; $row < count($parsedQ); $row++) {
         echo "<br/><br/><h2><b>" . $parsedQ[$row] . "</b></h2>";
         for ($col = $count; $col < ($count + 4); $col++) {
-            echo "<h3>" . $count . "</h3>";
+            echo "<h3>" . $col . "</h3>";
             echo "<h3><input type='radio' id='" . $row . "' name='" . $row . "'>" . $parsedA[$col] . "</h3>";
         }
-        $count + 4;
+        $count += 4;
     }
 }
 
 ?>
     <h2>Pick the correct answer:</h2>
-    <?php printQuizData(1); ?>
+    <?php printQuizData($_GET['quiz']); ?>
     <br/><br/><button class="quizSubmit" type="submit" name="submitButton">Submit Quiz</button>
 
 <h2>
