@@ -12,22 +12,14 @@ function getQuizQuestions($quizID)
 {
     $getQuiz = "SELECT Questions FROM `rp_sproj_quiz` WHERE rp_sproj_quiz.QuizID = " . $quizID;
     $quizData = searchDB($getQuiz);
-    if (is_array($quizData)) {
-        return $quizData;
-    } else {
-        echo "<h2>" . $quizData . "</h2>";
-    }
+    return $quizData;
 }
 
 function getQuizAnswers($quizID)
 {
     $getQuiz = "SELECT Answers FROM `rp_sproj_quiz` WHERE rp_sproj_quiz.QuizID = " . $quizID;
     $quizData = searchDB($getQuiz);
-    if (is_array($quizData)) {
-        return $quizData;
-    } else {
-        echo "<h2>" . $quizData . "</h2>";
-    }
+    return $quizData;
 }
 
 function searchDB($quiz)
@@ -49,7 +41,7 @@ function searchDB($quiz)
         if ($result->num_rows > 0) {
             // Go through data and put it into an array
             while ($row = mysqli_fetch_row($result)) {
-                $sqlData = "" . $row[0];
+                $sqlData .= "" . $row[0];
             }
 
             // Closes the connection to the database

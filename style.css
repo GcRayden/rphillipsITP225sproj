@@ -53,6 +53,15 @@
   input[type="submit"]:hover {
     background-color: #3e8e41;
   }
+
+  button[type="submit"] {
+    margin: 25px auto 0;
+    height: 50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   .topnav {
     overflow: hidden;
