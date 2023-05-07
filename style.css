@@ -106,6 +106,14 @@
     align-items: center;
   }
 
+  .correct-answer {
+    color: green;
+}
+
+  .wrong-answer {
+    color: red;
+}
+
   td {
     padding: 20px;
   }
