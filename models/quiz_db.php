@@ -1,18 +1,44 @@
 <?php
 
-function getQuizData($quizID)
+// Only start a session if one doesn't already exist
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+  
+  // Connect to the database
+  require('./models/connect_db.php');
+
+function getQuizQuestions($quizID)
 {
-    $getQuiz = "SELECT QuizID, Name, Description FROM `rp_sproj_quiz` WHERE rp_sproj_quiz.QuizID = " . $quizID;
-    $sqlData = array(array('Quiz ID', 'Name', 'Description', 'Play'));
-    searchDB($getQuiz, $sqlData);
+    $getQuiz = "SELECT Questions FROM `rp_sproj_quiz` WHERE rp_sproj_quiz.QuizID = " . $quizID;
+    $quizData = searchDB($getQuiz);
+    if (is_array($quizData)) {
+        return $quizData;
+    } else {
+        echo "<h2>" . $quizData . "</h2>";
+    }
 }
 
-function searchDB($quiz, $sqlData)
+function getQuizAnswers($quizID)
+{
+    $getQuiz = "SELECT Answers FROM `rp_sproj_quiz` WHERE rp_sproj_quiz.QuizID = " . $quizID;
+    $quizData = searchDB($getQuiz);
+    if (is_array($quizData)) {
+        return $quizData;
+    } else {
+        echo "<h2>" . $quizData . "</h2>";
+    }
+}
+
+function searchDB($quiz)
 {
     global $message;
 
     // Open connection to database
     $mysqli = openConnection();
+
+    $sqlData = "";
+    $message = "";
 
     // Generate Select statement
     $result = $mysqli->query($quiz);
@@ -23,13 +49,13 @@ function searchDB($quiz, $sqlData)
         if ($result->num_rows > 0) {
             // Go through data and put it into an array
             while ($row = mysqli_fetch_row($result)) {
-                $sqlData[] = $row;
+                $sqlData = "" . $row[0];
             }
 
             // Closes the connection to the database
             closeConnection($mysqli);
+            return (string)$sqlData;
 
-            return $sqlData;
         } else {
             // Otherwise, tell them they have the wrong password
             $message = "No Quiz Data Found!";
@@ -41,5 +67,7 @@ function searchDB($quiz, $sqlData)
 
     // Closes the connection to the database
     closeConnection($mysqli);
+    return $message;
 }
+
 ?>
