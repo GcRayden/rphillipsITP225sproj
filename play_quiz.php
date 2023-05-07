@@ -51,8 +51,12 @@ function printQuizData($quizID)
 
         // Put it on the page
         for ($col = 0; $col < 4; $col++) {
+
+            // Variables for checking
             $checked = '';
             $class = '';
+
+            // Check if the answers are right or wrong
             if (isset($_POST[$row]) && $_POST[$row] == $rand[$row][$col]) {
                 $checked = 'checked';
                 if ($rand[$row][$col] == $answerKey[$row]) {
@@ -65,6 +69,7 @@ function printQuizData($quizID)
         }
     }
 
+    // Check for the right answer
     if (isset($_POST['submitButton'])) {
         $score = 0;
         for ($row = 0; $row < count($parsedQ); $row++) {
@@ -76,6 +81,8 @@ function printQuizData($quizID)
                 }
             }
         }
+
+        // Let the user know what score they got
         global $message;
         $message = "Your score is: " . $score . "/" . count($parsedQ);
     }
@@ -86,12 +93,16 @@ function printQuizData($quizID)
 <br/><br/>
 <form method="POST" action="">
     <h2>Pick the correct answer:</h2>
-    <?php printQuizData($_GET['quiz']); ?>
-    <br/><br/>
+
+    <!-- Call to get the quiz data -->
+    <?php printQuizData($_GET['quiz']); ?><br/><br/>
+
+    <!-- Submit button -->
     <button class="quizSubmit" type="submit" name="submitButton">Submit Quiz</button>
 </form>
 
 <h2>
+    <!-- Message to the user -->
     <?php echo $message ?>
 </h2>
 <?php include './includes/footer.php'; ?>
