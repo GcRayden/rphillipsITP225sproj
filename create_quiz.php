@@ -49,7 +49,21 @@ if ($submitToken === $submittedToken) {
     // Open connection to database
     $mysqli = openConnection();
 
-    $sql = "INSERT INTO `rp_sproj_quiz` (MemberID, Name, Description, Questions, Answers) VALUES ('" . mysqli_real_escape_string($mysqli, $memberID) . "', '" . mysqli_real_escape_string($mysqli, $name) . "', '" . mysqli_real_escape_string($mysqli, $desc) . "', '" . mysqli_real_escape_string($mysqli, $questions_str) . "', '" . mysqli_real_escape_string($mysqli, $answers_str) . "')";
+    $sql = "INSERT INTO `rp_sproj_quiz` (MemberID, Name, Description, Questions, Answers) 
+    VALUES (?, ?, ?, ?, ?)";
+    
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("sssss", $memberID, $name, $desc, $questions_str, $answers_str);
+    
+    if ($stmt->execute()) {
+        // Send them to the account page
+        $quiz_id = $mysqli->insert_id;
+        header('Location: play_quiz.php?quiz=' . $quiz_id);
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+    
+    $stmt->close();
 
     // Generate Select statement
     $result = $mysqli->query($sql);

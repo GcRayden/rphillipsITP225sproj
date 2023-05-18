@@ -34,6 +34,7 @@ function printQuizData($quizID)
         if ($answerCount % 4 == 0) {
             $answerKey[] = $i;
         }
+        $answerCount++; // Increment the $answerCount variable
     }
 
     $rand = array();
@@ -50,22 +51,20 @@ function printQuizData($quizID)
         shuffle($rand[$row]);
 
         // Put it on the page
-        for ($col = 0; $col < 4; $col++) {
-
-            // Variables for checking
+        foreach ($rand[$row] as $option) {
             $checked = '';
             $class = '';
-
-            // Check if the answers are right or wrong
-            if (isset($_POST[$row]) && $_POST[$row] == $rand[$row][$col]) {
+            
+            if (isset($_POST[$row]) && $_POST[$row] == $option) {
                 $checked = 'checked';
-                if ($rand[$row][$col] == $answerKey[$row]) {
+                if ($option == $answerKey[$row]) {
                     $class = 'correct-answer';
                 } else {
                     $class = 'wrong-answer';
                 }
             }
-            echo "<h3><input type='radio' id='" . $row . "' name='" . $row . "' value='" . $rand[$row][$col] . "' $checked><span class='$class'>" . $rand[$row][$col] . "</span></h3>";
+            
+            echo "<h3><input type='radio' id='" . $row . "' name='" . $row . "' value='" . $option . "' $checked><span class='$class'>" . $option . "</span></h3>";
         }
     }
 
